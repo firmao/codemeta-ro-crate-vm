@@ -1,0 +1,46 @@
+- name: Install and configure a simple VM
+  hosts:
+    - localhost
+  gather_facts: false
+  tasks:
+    - name: Wait for system to become reachable
+      wait_for_connection:
+        timeout: 300
+
+    - name: Gather facts for first time
+      setup:
+
+    - name: Ubuntu
+      when: ansible_distribution == 'Ubuntu'
+      block:
+      - name: Install required packages
+        package:
+          name:
+            - phpmyadmin
+            - nginx
+            - php-fpm
+          state: present
+#      - name: Stop apache2
+#         service:
+#           name: apache2
+#           state: stopped
+#           enabled: no
+      - name: Start nginx
+        service:
+          name: nginx
+          state: started
+          enabled: yes
+      - name: Create snippets/phpmyadmin.conf
+        copy:
+          src: files/snippets-phpmyadmin.conf
+          dest: /etc/nginx/snippets/phpmyadmin.conf
+          mode: '0644'
+      - name: Add line in /etc/nginx/sites-available/default
+        lineinfile:
+          path: /etc/nginx/sites-available/default
+          regexp: '^# include snippets/snakeoil.conf;'
+          line: include snippets/phpmyadmin.conf;
+      - name: Restart nginx
+        service:
+          name: nginx
+          state: restarted
