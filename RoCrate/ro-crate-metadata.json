@@ -1,0 +1,23 @@
+{
+  "@context": "https://w3id.org/ro/crate/1.1/context",
+  "@graph": [
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "about": { "@id": "./" }
+    },
+    {
+      "@id": "./",
+      "@type": "Dataset",
+      "name": "VM Deployment Crate",
+      "description": "Configuration for a reproducible analysis environment",
+      "hasPart": [ { "@id": "vm-config.yaml" } ]
+    },
+    {
+      "@id": "vm-config.yaml",
+      "@type": ["File", "SoftwareSourceCode"],
+      "programmingLanguage": { "@id": "https://yaml.org/" },
+      "description": "Cloud-init configuration for the virtual machine"
+    }
+  ]
+}

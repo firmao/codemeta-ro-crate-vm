@@ -5,9 +5,9 @@ packages:
 runcmd:
 - echo "Environment setup complete."
 write_files:
-- content: 'Welcome to the VM for odissei-portal
+- content: 'Welcome to the VM for odissei-knowledge-graph
 
-    Version: 1.0.0
+    Version: 1.0.1
 
     '
   path: /etc/motd
