@@ -37,3 +37,7 @@ Once your script has started the VM, you can manage it from your terminal, here 
 - **Stop the VM**	`multipass stop mac-dev-box`
 - **Delete the VM** `multipass delete --purge mac-dev-box`
 
+# Ro-Crate experiments
+**run_vm_rocrate.py** creates a **ro-crate-metadata.yaml** file and runs a VM configured by it.
+
+You can use this ro-crate file to create a vm in other environments, no need to be multipass on a MacBook.
