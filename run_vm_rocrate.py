@@ -93,7 +93,7 @@ def launch_vm_with_deps(crate_data):
 
 if __name__ == "__main__":
     # Define file paths
-    SOURCE = "code-meta.json"
+    SOURCE = "codemeta.json"
     TARGET = "ro-crate-metadata.yaml"
 
     # Execution
