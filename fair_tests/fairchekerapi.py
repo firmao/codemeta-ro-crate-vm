@@ -5,111 +5,82 @@ import time
 # --- CONFIGURATION ---
 DATAVERSE_BASE_URL = "https://datasets.iisg.amsterdam"
 DATAVERSE_ALIAS = "globalise"
-# API endpoint for evaluating all metrics for a given resource
-FAIR_CHECKER_URL = "http://fair-checker.france-bioinformatique.fr/api/check/metrics/all"
+# Correct POST endpoint for current FAIR-checker version
+FAIR_CHECKER_API = "http://fair-checker.france-bioinformatique.fr/api/check/metrics"
 OUTPUT_FILE = "globalise_fair_results.csv"
 
 def get_globalise_datasets():
-    """Fetches the first 23 dataset PIDs from the Globalise Dataverse."""
-    print("Connecting to Amsterdam Dataverse...")
+    """Fetches the 23 dataset IDs from Globalise."""
+    print("Step 1: Fetching datasets from Amsterdam Dataverse...")
     search_url = f"{DATAVERSE_BASE_URL}/api/v1/search"
-    params = {
-        "q": "*",
-        "type": "dataset",
-        "subtree": DATAVERSE_ALIAS,
-        "per_page": 23 
-    }
+    params = {"q": "*", "type": "dataset", "subtree": DATAVERSE_ALIAS, "per_page": 23}
+    
     try:
         response = requests.get(search_url, params=params)
         response.raise_for_status()
         items = response.json()['data']['items']
-        
-        return [{
-            "title": item.get("name"),
-            "pid": item.get("global_id"),
-            "url": item.get("url")
-        } for item in items]
+        return [{"title": i.get("name"), "pid": i.get("global_id")} for i in items]
     except Exception as e:
-        print(f"Failed to fetch datasets: {e}")
+        print(f"Dataverse Error: {e}")
         return []
 
-def run_fair_assessment(resource_id):
-    """
-    Sends the dataset ID to FAIR-checker.
-    Returns a dictionary of counts for F, A, I, and R principles.
-    """
-    print(f"Evaluating FAIR metrics for: {resource_id}...")
+def run_fair_assessment(pid):
+    """Sends the PID to FAIR-checker using the required POST method."""
+    # Resolve 'hdl:' or 'doi:' to a full URL so the checker can crawl it
+    resolved_url = pid
+    if pid.startswith("hdl:"):
+        resolved_url = f"https://hdl.handle.net/{pid.split('hdl:')[1]}"
+    elif pid.startswith("doi:"):
+        resolved_url = f"https://doi.org/{pid.split('doi:')[1]}"
+
+    print(f"Evaluating: {resolved_url}...")
+    
     try:
-        # We pass the PID as the 'url' parameter to the FAIR-checker
-        response = requests.get(FAIR_CHECKER_URL, params={"url": resource_id}, timeout=90)
+        # The API often requires a POST with a JSON body
+        payload = {"url": resolved_url}
+        response = requests.post(FAIR_CHECKER_API, json=payload, timeout=120)
         
         if response.status_code == 200:
-            metrics_data = response.json()
-            summary = {"F": 0, "A": 0, "I": 0, "R": 0, "Total": 0}
-            
-            for metric in metrics_data:
-                # FAIR-checker returns 'passed' or 'failed' for each metric
-                score = 1 if metric.get("status") == "passed" else 0
-                # Extract first letter of principle (e.g., 'Findable' -> 'F')
-                principle = metric.get("principle", "Unknown")[0].upper()
-                
-                if principle in summary:
-                    summary[principle] += score
-                    summary["Total"] += score
-            return summary
+            metrics = response.json()
+            results = {"F": 0, "A": 0, "I": 0, "R": 0, "Total": 0}
+            for m in metrics:
+                score = 1 if m.get("status") in ["passed", "success", "1", 1] else 0
+                # Principle is usually the first letter of the metric ID (e.g., F1)
+                p_key = m.get("metric_id", "U")[0].upper()
+                if p_key in results:
+                    results[p_key] += score
+                    results["Total"] += score
+            return results
         else:
-            return f"API Error ({response.status_code})"
+            return f"Error {response.status_code}"
     except Exception as e:
-        return f"Timeout/Error: {str(e)}"
-
-def save_to_csv(results, filename):
-    """Writes the collected data to a local CSV file."""
-    keys = ["Dataset Title", "PID", "Findable", "Accessible", "Interoperable", "Reusable", "Total Score"]
-    
-    with open(filename, mode='w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=keys)
-        writer.writeheader()
-        
-        for res in results:
-            score = res['score']
-            row = {
-                "Dataset Title": res['title'],
-                "PID": res['pid']
-            }
-            
-            if isinstance(score, dict):
-                row.update({
-                    "Findable": score['F'],
-                    "Accessible": score['A'],
-                    "Interoperable": score['I'],
-                    "Reusable": score['R'],
-                    "Total Score": score['Total']
-                })
-            else:
-                # In case of an error string
-                row["Total Score"] = score
-                
-            writer.writerow(row)
+        return f"Request Failed: {str(e)}"
 
 def main():
     datasets = get_globalise_datasets()
-    if not datasets:
-        return
+    if not datasets: return
 
-    all_results = []
+    final_data = []
     for ds in datasets:
-        # Perform assessment
-        report = run_fair_assessment(ds['pid'])
-        all_results.append({
-            "title": ds['title'],
-            "pid": ds['pid'],
-            "score": report
-        })
-        # Short sleep to avoid overwhelming the FAIR-checker server
-        time.sleep(2)
+        score_data = run_fair_assessment(ds['pid'])
+        row = {"Title": ds['title'], "Identifier": ds['pid']}
+        
+        if isinstance(score_data, dict):
+            row.update(score_data)
+        else:
+            row["Total"] = score_data # Stores the error message
+            
+        final_data.append(row)
+        time.sleep(2) # Prevent rate-limiting
 
-    save_to_csv(all_results, OUTPUT_FILE)
-    print(f"\nDone! Assessment complete. Results saved to {OUTPUT_FILE}")
+    # Write to CSV
+    keys = ["Title", "Identifier", "F", "A", "I", "R", "Total"]
+    with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=keys)
+        writer.writeheader()
+        writer.writerows(final_data)
+    
+    print(f"\nSaved {len(final_data)} results to {OUTPUT_FILE}")
 
 if __name__ == "__main__":
     main()

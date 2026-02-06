@@ -1,0 +1,13 @@
+@prefix ns1: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/user/event_0> a ns1:Event ;
+    ns1:description "Walking" ;
+    ns1:location "Central Park" ;
+    ns1:startDate "2026-02-06T10:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/user/event_1> a ns1:Event ;
+    ns1:description "Stationary" ;
+    ns1:location "Joe's Coffee" ;
+    ns1:startDate "2026-02-06T12:00:00+00:00"^^xsd:dateTime .
+
