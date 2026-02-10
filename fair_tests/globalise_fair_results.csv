@@ -1,24 +1,24 @@
-Title,Identifier,F,A,I,R,Total
-VOC transcriptions v2 - GLOBALISE,hdl:10622/LVXSBW,,,,,Error 404
-GLOBALISE - Namebooks of the Dutch East India Company  (1730-1794),hdl:10622/DITM0Z,,,,,Error 404
-GLOBALISE - Early Modern Polities in the Dutch East India Company Archives (1600-1815),hdl:10622/SOS0KC,,,,,Error 404
-GLOBALISE - Weights and Measures in the 18th-Century Indian Ocean World,hdl:10622/MDNVH5,,,,,Error 404
-GLOBALISE Ground Truth for Handwritten Text and Layout Recognition,hdl:10622/QJZKZ2,,,,,Error 404
-GLOBALISE Geographical Indices of the RGP General Missives,hdl:10622/75DURG,,,,,Error 404
-GLOBALISE Laypa Baseline Model – August 2023,hdl:10622/VMSCBR,,,,,Error 404
-GLOBALISE Laypa Region Model - August 2023,hdl:10622/DMAS2T,,,,,Error 404
-GLOBALISE Thesaurus - Commodities,hdl:10622/YAWDOV,,,,,Error 404
-GLOBALISE Loghi Handwritten Text Recognition Model – August 2023,hdl:10622/X2JZYY,,,,,Error 404
-"VOC Prices in the Dutch-Asian Trade, 1608-1800",hdl:10622/PEKT40,,,,,Error 404
-VOC transcriptions - GLOBALISE,hdl:10622/JCTCJ2,,,,,Error 404
-Kerajaan2 Indonesia,hdl:10622/V3XJIR,,,,,Error 404
-Overview of People in the TEPC Inventories (1673-1844),hdl:10622/XDI7DD,,,,,Error 404
-GLOBALISE - Places in the Dutch East India Company Archives (1602-1799),hdl:10622/WYVERW,,,,,Error 404
-GLOBALISE - Digitized Indexes of the Dutch East India Company OBP (1602-1799),hdl:10622/LVOQTG,,,,,Error 404
-"GLOBALISE - Ethnicities, Religious Groups and Castes in the Archives of the Dutch East India Company (1602-1799)",hdl:10622/5LRS03,,,,,Error 404
-GLOBALISE - VOC Document Segmentation Dataset,hdl:10622/XMCZLZ,,,,,Error 404
-Japanese Individuals relevant to the Dutch East India Company Archives,hdl:10622/MMAYDK,,,,,Error 404
-GLOBALISE - Non-Western people described in the General Missive footnotes,hdl:10622/DTQKI6,,,,,Error 404
-GLOBALISE - VOC Census Records of Cochin (1700-1775),hdl:10622/OHM48J,,,,,Error 404
-"Overzicht van Generale Missiven in het archief van de VOC, 1.04.02",hdl:10622/BHKMWE,,,,,Error 404
-ESTA Database Locations,hdl:10622/IWJMHH,,,,,Error 404
+Dataset Title,Identifier,F,A,I,R,Total_Passed
+VOC transcriptions v2 - GLOBALISE,hdl:10622/LVXSBW,0,0,0,0,0
+GLOBALISE - Namebooks of the Dutch East India Company  (1730-1794),hdl:10622/DITM0Z,0,0,0,0,0
+GLOBALISE - Early Modern Polities in the Dutch East India Company Archives (1600-1815),hdl:10622/SOS0KC,0,0,0,0,0
+GLOBALISE - Weights and Measures in the 18th-Century Indian Ocean World,hdl:10622/MDNVH5,0,0,0,0,0
+GLOBALISE Ground Truth for Handwritten Text and Layout Recognition,hdl:10622/QJZKZ2,0,0,0,0,0
+GLOBALISE Geographical Indices of the RGP General Missives,hdl:10622/75DURG,0,0,0,0,0
+GLOBALISE Laypa Baseline Model – August 2023,hdl:10622/VMSCBR,0,0,0,0,0
+GLOBALISE Laypa Region Model - August 2023,hdl:10622/DMAS2T,0,0,0,0,0
+GLOBALISE Thesaurus - Commodities,hdl:10622/YAWDOV,0,0,0,0,0
+GLOBALISE Loghi Handwritten Text Recognition Model – August 2023,hdl:10622/X2JZYY,0,0,0,0,0
+"VOC Prices in the Dutch-Asian Trade, 1608-1800",hdl:10622/PEKT40,0,0,0,0,0
+VOC transcriptions - GLOBALISE,hdl:10622/JCTCJ2,0,0,0,0,0
+Kerajaan2 Indonesia,hdl:10622/V3XJIR,0,0,0,0,0
+Overview of People in the TEPC Inventories (1673-1844),hdl:10622/XDI7DD,0,0,0,0,0
+GLOBALISE - Places in the Dutch East India Company Archives (1602-1799),hdl:10622/WYVERW,0,0,0,0,0
+GLOBALISE - Digitized Indexes of the Dutch East India Company OBP (1602-1799),hdl:10622/LVOQTG,0,0,0,0,0
+"GLOBALISE - Ethnicities, Religious Groups and Castes in the Archives of the Dutch East India Company (1602-1799)",hdl:10622/5LRS03,0,0,0,0,0
+GLOBALISE - VOC Document Segmentation Dataset,hdl:10622/XMCZLZ,0,0,0,0,0
+Japanese Individuals relevant to the Dutch East India Company Archives,hdl:10622/MMAYDK,0,0,0,0,0
+GLOBALISE - Non-Western people described in the General Missive footnotes,hdl:10622/DTQKI6,0,0,0,0,0
+GLOBALISE - VOC Census Records of Cochin (1700-1775),hdl:10622/OHM48J,0,0,0,0,0
+"Overzicht van Generale Missiven in het archief van de VOC, 1.04.02",hdl:10622/BHKMWE,0,0,0,0,0
+ESTA Database Locations,hdl:10622/IWJMHH,0,0,0,0,0
