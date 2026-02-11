@@ -18,4 +18,4 @@ jobs:
         uses: mxschmitt/action-tmate@v3
         # This keeps the session open for you to connect
         with:
-          limit-access-to-actor: true
+          limit-access-to-actor: false
