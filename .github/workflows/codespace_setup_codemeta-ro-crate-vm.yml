@@ -1,0 +1,31 @@
+name: Provision Codespace for codemeta-ro-crate-vm
+'on':
+  workflow_dispatch:
+    inputs:
+      machine_type:
+        description: Choose machine size
+        required: true
+        default: basicLinux32gb
+        type: choice
+        options:
+        - basicLinux32gb
+        - standardLinux32gb
+        - premiumLinux64gb
+jobs:
+  create-codespace:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install GitHub CLI
+      run: sudo apt update && sudo apt install gh -y
+    - name: Authenticate and Create Codespace
+      env:
+        GH_TOKEN: ${{ secrets.CODESPACE_TOKEN }}
+      run: gh codespace create --repo https://github.com/firmao/codemeta-ro-crate-vm.git
+        --machine ${{ github.event.inputs.machine_type }} --display-name 'DevEnv-codemeta-ro-crate-vm'
+    - name: Verify Environment Setup
+      env:
+        GH_TOKEN: ${{ secrets.CODESPACE_TOKEN }}
+      run: gh codespace cp -r . 'codemeta-ro-crate-vm':/workspaces/ && gh codespace
+        ssh -c 'cd /workspaces/codemeta-ro-crate-vm && if [ -f requirements.txt ];
+        then pip install -r requirements.txt; fi && if [ -f setup.sh ]; then chmod
+        +x setup.sh && ./setup.sh; fi'
