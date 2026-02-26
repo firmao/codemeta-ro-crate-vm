@@ -1,0 +1,23 @@
+- name: Install Required Software for CodeMeta RO-Crate VM
+  hosts: all
+  become: true
+  tasks:
+  - name: Update apt cache
+    apt:
+      update_cache: 'yes'
+      cache_valid_time: 3600
+  - name: Install system packages identified from Readme
+    apt:
+      name:
+      - git
+      - curl
+      - jq
+      - build-essential
+      state: present
+  - name: Install Python libraries for RO-Crate and CodeMeta
+    pip:
+      name:
+      - rocrate
+      - codemetapy
+      state: present
+      executable: pip3

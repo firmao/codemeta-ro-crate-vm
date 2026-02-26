@@ -1,0 +1,4 @@
+=== Requirements Analysis for firmao/codemeta-ro-crate-vm ===
+
+[SCANNING README.MD]
+No explicit shell commands detected in README.

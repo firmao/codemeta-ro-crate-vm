@@ -1,0 +1,20 @@
+'@context': https://w3id.org/ro/crate/1.1/context
+'@graph':
+- '@id': ro-crate-metadata.yaml
+  '@type': CreativeWork
+  about:
+    '@id': ./
+  conformsTo:
+    '@id': https://w3id.org/ro/crate/1.1
+- '@id': ./
+  '@type': Dataset
+  name: Alpino
+  description: Environment for https://github.com/rug-compling/Alpino.git
+  url: https://github.com/rug-compling/Alpino.git
+  virtualization:
+    cpus: 2
+    memory: 2G
+    disk: 10G
+    os: '22.04'
+  dependencies:
+  - git
